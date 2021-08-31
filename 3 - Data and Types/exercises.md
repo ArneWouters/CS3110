@@ -198,24 +198,133 @@ val make_student : string -> string -> float -> student = <fun>
 ```
 
 ## pokerecord [★★]
+```ocaml
+type pokemon = {name : string; hp : int; ptype : poketype}
+let charizard = {name = "Charizard"; hp = 78; ptype = Fire}
+let squirtle = {name = "Squirtle"; hp = 44; ptype = Water}
+```
 
 ## safe hd and tl [★★]
+```ocaml
+let safe_hd = function
+  | [] -> None
+  | x :: xs -> Some x
 
+let rec safe_tl = function
+  | [] -> None
+  | x :: [] -> Some x
+  | _ :: xs -> safe_tl xs
+```
+
+```ocaml
+val safe_hd : 'a list -> 'a option = <fun>
+val safe_tl : 'a list -> 'a option = <fun>
+```
 ## pokefun [★★★]
+```ocaml
+let rec max_hp = function
+  | [] -> None
+  | x :: xs -> begin
+    match max_hp xs with
+      | None -> Some x
+      | Some m -> if x.hp > m.hp then Some x else Some m
+    end
+```
+
+```ocaml
+val max_hp : pokemon list -> pokemon option = <fun>
+```
 
 ## date before [★★]
+```ocaml
+let is_before (date1 : int * int * int) (date2 : int * int * int) =
+  let (year1, month1, day1) = date1 in
+    let (year2, month2, day2) = date2 in
+      if (year1 = year2) then begin
+        if (month1 = month2) then day1 < day2 else month1 < month2
+        end
+      else year1 < year2
+```
+
+```ocaml
+val is_before : int * int * int -> int * int * int -> bool = <fun>
+```
 
 ## earliest date [★★★]
+```ocaml
+let rec earliest (lst : (int * int * int) list) =
+  match lst with
+    | [] -> None
+    | x :: xs -> begin
+      match earliest xs with
+        | None -> Some x
+        | Some m -> if is_before x m then Some x else Some m
+      end
+```
+
+```ocaml
+val earliest : (int * int * int) list -> (int * int * int) option = <fun>
+```
 
 ## assoc list [★]
+```ocaml
+let assoc_lst = [] |> insert 1 "one" |> insert 2 "two" |> insert 3 "three"
+lookup 2 assoc_lst
+lookup 4 assoc_lst
+```
+
+```ocaml
+val assoc_lst : (int * string) list = [(3, "three"); (2, "two"); (1, "one")]
+- : string option = Some "two"
+- : string option = None
+```
 
 ## cards [★★]
+```ocaml
+type suit = Clubs | Diamonds | Hearts | Spades
+type rank = Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | Jack | Queen | King | Ace
+type card = {c_suit : suit; c_rank : rank}
+
+{c_suit = Clubs; c_rank = Ace}
+{c_suit = Hearts; c_rank = Queen}
+{c_suit = Diamonds; c_rank = Two}
+{c_suit = Spades; c_rank = Seven}
+```
 
 ## matching [★]
+```ocaml
+None :: _
+Some 3110 :: None :: _ :: _
+Some _ :: _ :: _ :: _
+_ :: []
+[] (* Matches everything except for the empty list *)
+```
 
 ## quadrant [★★]
+```ocaml
+let sign (x:int) : sign =
+  if x > 0 then Pos
+  else if x < 0 then Neg
+  else Zero
+
+let quadrant : int*int -> quad option = fun (x,y) ->
+  match (sign x, sign y) with
+  | (Pos, Pos) -> Some I
+  | (Pos, Neg) -> Some II
+  | (Neg, Neg) -> Some III
+  | (Neg, Pos) -> Some IV
+  | _ -> None
+```
 
 ## quadrant when [★★]
+```ocaml
+let quadrant_when : int*int -> quad option = function
+  | (x, y) when x > 0 && y > 0 -> Some I
+  | (x, y) when x < 0 && y > 0 -> Some II
+  | (x, y) when x < 0 && y < 0 -> Some III
+  | (x, y) when x < 0 && y < 0 -> Some IV
+  | _ -> None
+```
 
 ## depth [★★]
 
