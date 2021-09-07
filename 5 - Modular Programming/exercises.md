@@ -26,8 +26,10 @@ See Chapter 5.5 for the explanation
 See [bstdict.ml](bstdict.ml)
 
 ## fraction [★★★]
+See [fraction.ml](fraction.ml)
 
 ## fraction reduced [★★★]
+See [fraction.ml](fraction.ml)
 
 ## make char map [★]
 
