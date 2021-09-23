@@ -53,9 +53,25 @@ let normalize v =
 ```
 
 ## norm loop [★★]
+```ocaml
+let norm v =
+  let ans = ref 0. in
+    for i = 0 to Array.length v - 1 do
+      ans := !ans +. (v.(i) *. v.(i))
+    done;
+    sqrt !ans
+```
 
 ## normalize loop [★★]
+```ocaml
+let normalize v =
+  let y = norm v in
+    for i = 0 to Array.length v - 1 do
+      v.(i) <- v.(i) /. y
+    done
+```
 
 ## init matrix [★★★]
 
 ## doubly linked list [★★★★]
+
